@@ -13,4 +13,4 @@ def test_get_basin_size():
     assert(solution.get_basin_size(solution.get_inputs('test_input.txt'), (4,6)) == 9)
 
 def test_get_top_3_basin_size_multiples():
-    assert(solution.get_top_3_basin_size_multiples(solution.get_inputs('test_input.txt')) == 1134)
+    assert(solution.get_top_3_basin_size_product(solution.get_inputs('test_input.txt')) == 1134)

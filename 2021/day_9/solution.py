@@ -63,7 +63,7 @@ def get_basin_size(inputs, loc):
 
     return len(visited)
 
-def get_top_3_basin_size_multiples(inputs):
+def get_top_3_basin_size_product(inputs):
 
     lowest_points = get_lowest_points(inputs)
     basin_sizes = [get_basin_size(inputs, loc) for loc in lowest_points]
@@ -74,4 +74,4 @@ def get_top_3_basin_size_multiples(inputs):
 if __name__ == '__main__':
 
     print('First answer is: ', get_risk_score_sum(get_inputs('input.txt')))
-    print('Second answer is: ', get_top_3_basin_size_multiples(get_inputs('input.txt')))
+    print('Second answer is: ', get_top_3_basin_size_product(get_inputs('input.txt')))
