@@ -10,3 +10,7 @@ def test_get_syntax_error():
 def test_get_syntax_error_score():
     inputs = solution.get_inputs('test_input.txt')
     assert(solution.get_syntax_error_score(inputs) == 26397)
+
+def test_get_incomplete_lines_score():
+    inputs = solution.get_inputs('test_input.txt')
+    assert(solution.get_incomplete_lines_score(inputs) == 288957)
