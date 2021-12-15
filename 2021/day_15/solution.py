@@ -1,3 +1,4 @@
+import heapq
 from numpy import Inf
 from itertools import chain
 
@@ -41,6 +42,18 @@ def reconstruct_path(camefrom, current):
 
     return final_path
 
+class PriorityQueue:
+    def __init__(self):
+        self.elements = []
+
+    def empty(self):
+        return not self.elements
+
+    def put(self, item, priority):
+        heapq.heappush(self.elements, (priority, item))
+
+    def get(self):
+        return heapq.heappop(self.elements)[1]
 
 def get_safest_path_and_score_astar(filename, pt2=False):
     graph, end = get_initial_graph(filename, pt2)
@@ -51,7 +64,8 @@ def get_safest_path_and_score_astar(filename, pt2=False):
 
     h = lambda x: abs(end[0] - x[0]) + abs(end[1] - x[1])
 
-    openset = {(0,0)}
+    openset = PriorityQueue()
+    openset.put((0,0), 0)
 
     camefrom = dict()
 
@@ -61,20 +75,18 @@ def get_safest_path_and_score_astar(filename, pt2=False):
     fscore = { node: Inf for node in graph.keys() }
     fscore[(0,0)] = h((0,0))
 
-    while len(openset) > 0:
-        current = min(openset, key=lambda x: fscore[x])
+    while not openset.empty():
+        current = openset.get()
         if current == end:
              return reconstruct_path(camefrom, current), gscore[current]
 
-        openset.remove(current)
         for neighbour in neighbours[current]:
             tentative_gscore = gscore[current] + graph[neighbour]['d']
             if tentative_gscore < gscore[neighbour]:
                 camefrom[neighbour] = current
                 gscore[neighbour] = tentative_gscore
                 fscore[neighbour] = tentative_gscore + h(neighbour)
-                if neighbour not in openset:
-                    openset.add(neighbour)
+                openset.put(neighbour, fscore[neighbour])
 
     return [], Inf
 
