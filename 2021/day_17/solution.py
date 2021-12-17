@@ -34,6 +34,10 @@ def check_velocities(vx,vy,x_min,x_max,y_min,y_max, with_highest_point):
     return False, False
 
 
+#Use the fact that the target square is in bottom right corner, beneath origin.
+#For max y, use the fact that y position at step n is n*y - (n-1)*(n)/2
+#Solving for = 0 i.e. where it crosses the origin we get n = 2y + 1.
+#At this step, the velocity is -y - 1, so would skip lower box boundary if y >= -y_min
 def get_highest_possible_point(x_min, x_max, y_min, y_max):
     highest_y = y_min
     for vx in range(get_x_min_velocity(x_min), x_max+1):
@@ -44,6 +48,11 @@ def get_highest_possible_point(x_min, x_max, y_min, y_max):
     return highest_y
 
 
+def get_y_positions(y, s):
+    vels = [y - i for i in range(s)]
+    return [sum(vels[:i]) for i in range(1, len(vels))]
+
+
 def get_velocities(x_min, x_max, y_min, y_max):
     velocities = set()
     for vx in range(get_x_min_velocity(x_min), x_max+1):
@@ -52,6 +61,7 @@ def get_velocities(x_min, x_max, y_min, y_max):
             if check:
                 velocities.add((vx, vy))
     return velocities
+
 
 def get_velocities_count(x_min, x_max, y_min, y_max):
     return len(get_velocities(x_min, x_max, y_min, y_max))
