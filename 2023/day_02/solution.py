@@ -1,7 +1,5 @@
 import re
 
-
-
 def get_games(lines):
     games = {}
     for line in lines:
@@ -26,7 +24,6 @@ def get_part_2_sum(lines):
         for game in games.values()
     ]
     return sum(game_min['red'] * game_min['green'] * game_min['blue'] for game_min in game_minimums)
-
 
 if __name__ == '__main__':
     with open('input.txt') as f:
