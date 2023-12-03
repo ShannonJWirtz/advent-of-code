@@ -33,6 +33,6 @@ def get_sum_part_2(input):
 
 if __name__ == '__main__':
     with open('input.txt') as f:
-        lines = tuple(line.strip() for line in f.readlines())
+        lines = [line.strip() for line in f.readlines()]
     print('Solution 1 is {}'.format(get_sum(lines)))
     print('Solution 2 is {}'.format(get_sum_part_2(lines)))
