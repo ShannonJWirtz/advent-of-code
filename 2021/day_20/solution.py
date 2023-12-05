@@ -31,12 +31,29 @@ def enhance_image_step(algorithm, image, dark_infinity_initially = True):
     return output_image, dark_infinity_initially
 
 
-def enhance(filename, iterations):
+def enhance(filename, iterations, print = False):
     algorithm, image = get_inputs(filename)
     dark_infinity_initially = True
     for i in range(iterations):
         image, dark_infinity_initially = enhance_image_step(algorithm, image, dark_infinity_initially)
-    return int(np.sum(image))
+    if not print:
+        return int(np.sum(image))
+    else:
+        return image
+
+a, i = get_inputs('input.txt')
+
+image = enhance('input.txt', 50, print = True)
+image.shape
+# np.sum(image)
+np.set_printoptions(threshold=np.inf, linewidth=np.inf)
+with open('image.csv', 'w') as f:
+    for line in image:
+        print(line)
+        f.write(','.join(str(int(i)) for i in line) + '\n')
+
+
+
 
 
 if __name__ == '__main__':
