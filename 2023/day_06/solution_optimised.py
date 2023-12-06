@@ -1,11 +1,10 @@
-import math
+from math import sqrt, floor
 
 def part1(times, records):
     multiplied_times = 1
     for time, record in zip(times, records):
         multiplied_times *= \
-        (math.ceil((time + math.sqrt(time**2 - 4 * record)) / 2) - 1) - \
-        (math.floor((time - math.sqrt(time**2 - 4 * record)) / 2) + 1) + 1
+        time - 2 * (floor((time - sqrt(time**2 - 4 * record)) / 2)) - 1
     return multiplied_times
 
 def part2(time, record): 
