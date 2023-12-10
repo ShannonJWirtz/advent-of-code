@@ -70,13 +70,13 @@ def part2(filename):
         next_node = next(n for n in graph[node_list[-1]]['pipe_destinations'] if n != start)
         while next_node not in node_list:
             node_list.append(next_node)
-            parity += get_parity(graph, *node_list[-3:])
+            parity += get_parity(*node_list[-3:])
             if not graph[next_node]['pipe_destinations']:
                 break
             next_node = next(n for n in graph[node_list[-1]]['pipe_destinations'] if n != node_list[-2])
         if next_node == start:
             node_list.append(start)
-            parity += get_parity(graph, *node_list[-3:])
+            parity += get_parity(*node_list[-3:])
             break
 
     parity = int(parity / abs(parity))
@@ -99,7 +99,7 @@ def get_directions(previous_node, current_node, next_node):
     next_dir = (next_node[0] - current_node[0], next_node[1] - current_node[1])
     return prev_dir, next_dir
 
-def get_parity(graph, previous_node, current_node, next_node):
+def get_parity(previous_node, current_node, next_node):
     prev_dir, next_dir = get_directions(previous_node, current_node, next_node)
     return prev_dir[0] * next_dir[1] - prev_dir[1] * next_dir[0]
 
@@ -123,6 +123,7 @@ def get_inside(graph, node_list, parity):
         for inside_node in inside_nodes:
             if inside_node in graph.keys() and not inside_node in node_list:
                 inside_boundary.add(inside_node)
+
     inside = inside_boundary.copy()
     to_check = set()
     for node in inside:
